@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "RDFa Marker",
+  "version": "1.0",
+  "default_locale": "en",
+  "homepage_url": "https://github.com/froza/rdfa-marker",  
+  "description": "rdfa-marker is chrome extension for Unicamp BR pratical project",
+  "author": "Unicamp",
+  "permissions": [
+    "tabs",
+	"storage",
+	"debugger"	
+  ],
+  "icons": {
+    "16": "img/rdfa.jpg",
+    "32": "img/rdfa.jpg",
+	"48": "img/rdfa.jpg",
+	"128": "img/rdfa.jpg",
+  },
+  "options_page": "options.html",
+  "browser_action"   : {
+	"default_icon" : "img/rdfa.jpg"
+  },  
+  "background": {
+    "persistent": false,
+	"scripts": [
+		"js/jquery-3.3.1.min.js",
+		"js/underscore-min.js"
+	]
+  },
+  "page_action": {
+      "default_popup": "html/popup.html",
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*"],
+      "run_at": "document_end",
+      "js": ["start.js"]
+    }
+  ],
+}
