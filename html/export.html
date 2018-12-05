@@ -1,80 +1,249 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/codemirror.css" type="text/css" />
-<link rel="stylesheet" href="/css/play.css" type="text/css" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/css/codemirror.css" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="/css/themes/all-hallow-eve.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/amy.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/argonaut.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/arona.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/bbedit.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/bespin.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/birds-of-paradise.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/black-pearl-ii.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/black-pearl.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/blackboard-black.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/blackboard.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/bongzilla.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/chanfle.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/chrome-devtools.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/classic-modified.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/clouds-midnight.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/clouds.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/cobalt.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/coda.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/cssedit.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/cube2media.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/darkpastel.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/dawn.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/django-(smoothy).css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/django.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/eiffel.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/emacs-strict.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/espresso-libre.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/espresso-soda.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/espresso-tutti.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/espresso.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/fade-to-grey.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/fake.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/fantasyscript.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/fluidvision.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/freckle.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/friendship-bracelet.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/github.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/glitterbomb.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/happy-happy-joy-joy-2.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/idle.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/idlefingers.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/iplastic.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/ir_black.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/ir_white.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/johnny.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/juicy.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/krtheme.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/kuroir.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/lazy.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/lowlight.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/mac-classic.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/made-of-code.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/magicwb-(amiga).css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/merbivore-soft.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/merbivore.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/monoindustrial.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/monokai-bright.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/monokai-fannonedition.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/monokai-sublime.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/monokai.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/mreq.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/nightlion.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/notebook.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/oceanic-muted.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/oceanic.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/pastels-on-dark.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/pastie.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/plasticcodewrap.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/prospettiva.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/putty.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/rails-envy.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/railscasts.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/rdark.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/rhuk.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/ryan-light.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/sidewalkchalk.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/slush-and-poppies.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/smoothy.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/solarized-(dark).css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/solarized-(light).css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/spacecadet.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/spectacular.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/summer-sun.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/summerfruit.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/sunburst.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/swyphs-ii.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/tango.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/text-ex-machina.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/tomorrow-night-blue.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/tomorrow-night-bright.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/tomorrow-night-eighties.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/tomorrow-night.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/tomorrow.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/toulousse-lautrec.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/toy-chest.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/tubster.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/twilight.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/venom.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/vibrant-fin.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/vibrant-ink.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/vibrant-tango.css">
+  <link rel="stylesheet" type="text/css" href="/css/themes/zenburnesque.css">
+  <link rel="stylesheet" type="text/css" href="/css/rdfa-marker.css" />
 </head>
-<body>
+<body class="bg-light">
   <div class="container">
-    <h3>HTML page generated:</h3>
     <div class="row">
-        <textarea id="pageHtml" class="form-control border border-dark w-100">
-<html style="color: green">
-  <!-- this is a comment -->
-  <head>
-    <title>Mixed HTML Example</title>
-    <style>
-h1 {
-  font-family: comic sans;
-  color: #f0f;
-}
-
-div {
-  background: yellow !important;
-}
-
-body {
-  max-width: 50em;
-  margin: 1em 2em 1em 5em;
-}
-</style>
-  </head>
-  <body>
-        <div vocab="http://schema.org/" typeof="Person">
-          <a property="image" href="http://manu.sporny.org/images/manu.png">
-            <span property="name">Manu Sporny</span>
-          </a>
-          ,
-          <span property="jobTitle">Founder/CEO</span>
-          <div>
-            Phone:
-            <span property="telephone">(540) 961-4469</span>
-          </div>
-          <div>
-            E-mail:
-            <a property="email" href="mailto:msporny@digitalbazaar.com">msporny@digitalbazaar.com</a>
-          </div>
-          <div>
-            Links:
-            <a property="url" href="http://manu.sporny.org/">Manus homepage</a>
-          </div>
-        </div>
-<script>
-      function jsFunc(arg1, arg2) {
-        if (arg1 && arg2) document.body.innerHTML = "achoo";
-      }
-    </script>
-  </body>
-</html>
-      </textarea>
+      <div class="col">
+        <h3>HTML Semantic Generated:</h3>
+      </div>
+      <div class="col">
+        <select class="theme" style="float: right; margin-top: 10px;">
+          <option selected disabled>Select a theme</option>
+          <option>all-hallow-eve</option>
+          <option>amy</option>
+          <option>argonaut</option>
+          <option>arona</option>
+          <option>bbedit</option>
+          <option>bespin</option>
+          <option>birds-of-paradise</option>
+          <option>black-pearl-ii</option>
+          <option>black-pearl</option>
+          <option>blackboard-black</option>
+          <option>blackboard</option>
+          <option>bongzilla</option>
+          <option>chanfle</option>
+          <option>chrome-devtools</option>
+          <option>classic-modified</option>
+          <option>clouds-midnight</option>
+          <option>clouds</option>
+          <option>cobalt</option>
+          <option>coda</option>
+          <option>cssedit</option>
+          <option>cube2media</option>
+          <option>darkpastel</option>
+          <option>dawn</option>
+          <option>django-(smoothy)</option>
+          <option>django</option>
+          <option>eiffel</option>
+          <option>emacs-strict</option>
+          <option>espresso-libre</option>
+          <option>espresso-soda</option>
+          <option>espresso-tutti</option>
+          <option>espresso</option>
+          <option>fade-to-grey</option>
+          <option>fake</option>
+          <option>fantasyscript</option>
+          <option>fluidvision</option>
+          <option>freckle</option>
+          <option>friendship-bracelet</option>
+          <option>github</option>
+          <option>glitterbomb</option>
+          <option>happy-happy-joy-joy-2</option>
+          <option>idle</option>
+          <option>idlefingers</option>
+          <option>iplastic</option>
+          <option>ir_black</option>
+          <option>ir_white</option>
+          <option>johnny</option>
+          <option>juicy</option>
+          <option>krtheme</option>
+          <option>kuroir</option>
+          <option>lazy</option>
+          <option>lowlight</option>
+          <option>mac-classic</option>
+          <option>made-of-code</option>
+          <option>magicwb-(amiga)</option>
+          <option>merbivore-soft</option>
+          <option>merbivore</option>
+          <option>monoindustrial</option>
+          <option>monokai-bright</option>
+          <option>monokai-fannonedition</option>
+          <option>monokai-sublime</option>
+          <option>monokai</option>
+          <option>mreq</option>
+          <option>nightlion</option>
+          <option>notebook</option>
+          <option>oceanic-muted</option>
+          <option>oceanic</option>
+          <option>pastels-on-dark</option>
+          <option>pastie</option>
+          <option>plasticcodewrap</option>
+          <option>prospettiva</option>
+          <option>putty</option>
+          <option>rails-envy</option>
+          <option>railscasts</option>
+          <option>rdark</option>
+          <option>rhuk</option>
+          <option>ryan-light</option>
+          <option>sidewalkchalk</option>
+          <option>slush-and-poppies</option>
+          <option>smoothy</option>
+          <option>solarized-(dark)</option>
+          <option>solarized-(light)</option>
+          <option>spacecadet</option>
+          <option>spectacular</option>
+          <option>summer-sun</option>
+          <option>summerfruit</option>
+          <option>sunburst</option>
+          <option>swyphs-ii</option>
+          <option>tango</option>
+          <option>text-ex-machina</option>
+          <option>tomorrow-night-blue</option>
+          <option>tomorrow-night-bright</option>
+          <option>tomorrow-night-eighties</option>
+          <option>tomorrow-night</option>
+          <option>tomorrow</option>
+          <option>toulousse-lautrec</option>
+          <option>toy-chest</option>
+          <option>tubster</option>
+          <option>twilight</option>
+          <option>venom</option>
+          <option>vibrant-fin</option>
+          <option>vibrant-ink</option>
+          <option>vibrant-tango</option>
+          <option>zenburnesque</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <textarea id="pageHtml">
+        </textarea>
+        <iframe id="preview" style="width: 0; height: 0; border: 0; border: none"></iframe>
+      </div>
     </div>
     <br />
     <div class="row">
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item"><a class="nav-link active" id="visualization-tab" data-toggle="tab" href="#visualization" role="tab" aria-controls="visualization" aria-selected="true">Visualization</a></li>
-        <li class="nav-item"><a class="nav-link" id="rdf-tab" data-toggle="tab" href="#visualization" role="tab" aria-controls="rdf" aria-selected="false">RDF</a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane fade show active" id="visualization" role="tabpanel" aria-labelledby="visualization-tab">
-          <div id="viz-tab">
+      <div class="col">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item"><a class="nav-link active" id="rdf-graph-tab" data-toggle="tab" href="#rdf-graph" role="tab" aria-controls="rdf-graph" aria-selected="true">RDF Graph</a></li>
+          <li class="nav-item"><a class="nav-link" id="rdf-raw-tab" data-toggle="tab" href="#rdf-raw" role="tab" aria-controls="rdf-raw" aria-selected="false">RDF RAW</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="rdf-graph" role="tabpanel" aria-labelledby="rdf-graph-tab">
             <div id="graph"></div>
           </div>
-        </div>
-        <div class="tab-pane fade" id="rdf" role="tabpanel" aria-labelledby="rdf-tab">
-          <div id="turtle">
-            <textarea id="turtleOutputDisplay"></textarea>
+          <div class="tab-pane fade" id="rdf-raw" role="tabpanel" aria-labelledby="rdf-raw-tab">
+            <textarea id="turtleOutput"></textarea>
           </div>
         </div>
       </div>
@@ -85,18 +254,20 @@ body {
   <script type="text/javascript" src="/js/underscore.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/codemirror.min.js"></script>
-  <!-- <script type="text/javascript" src="/js/codemirror-turtle.min.js"></script> -->
-  <script type="text/javascript" src="/js/javascript.min.js"></script>
-  <script type="text/javascript" src="/js/selection-pointer.min.js"></script>
-  <script type="text/javascript" src="/js/xml.min.js"></script>
-  <script type="text/javascript" src="/js/javascript.min.js"></script>
-  <script type="text/javascript" src="/js/css.min.js"></script>
-  <script type="text/javascript" src="/js/vbscript.min.js"></script>
-  <script type="text/javascript" src="/js/htmlmixed.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.autorefresh.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.active-line.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.matchbrackets.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.selection-pointer.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.javascript.min.js"></script>  
+  <script type="text/javascript" src="/js/codemirror.xml.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.javascript.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.css.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.vbscript.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.htmlmixed.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.turtle.min.js"></script>
   <script type="text/javascript" src="/js/d3.min.js"></script>
   <script type="text/javascript" src="/js/rdfa.min.js"></script>
   <script type="text/javascript" src="/js/play.js"></script>
-  <script type="text/javascript" src="/js/play-examples.js"></script>
   <script type="text/javascript" src="/js/visualization.min.js"></script>
   <script type="text/javascript" src="/js/export.js"></script>
 </body>

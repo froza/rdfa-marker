@@ -14,22 +14,9 @@
   window.play = window.play || {};
   var play = window.play;
 
-  // The CodeMirror editor
-  play.editor = null;
-
-  // The CodeMirror triple display
-  play.outputDisplay = null;
-
-  // the counter is used to throttle previews and triple generation
-  play.processDelay = 500;
-
-  // the process timeout is used to keep track of the preview and triple 
-  // processing timeout 
-  play.processTimeout = null;
-
   // known prefixes used to shorten IRIs during the TURTLE transformation
   play.knownPrefixes = {
-   // w3c
+    // w3c
     'grddl': 'http://www.w3.org/2003/g/data-view#',
     'ma': 'http://www.w3.org/ns/ma-ont#',
     'owl': 'http://www.w3.org/2002/07/owl#',
@@ -69,105 +56,6 @@
     'vcard': 'http://www.w3.org/2006/vcard/ns#',
     'schema': 'http://schema.org/'
   }
-  
-  /**
-   * Used to initialize the UI, call once on document load.
-   */
-  play.init = function() {
-    // Initialize CodeMirror editor and the update callbacks
-    var editor = document.getElementById('editor');
-    var editorOptions = {
-      mode: 'text/html',
-      tabMode: 'indent',
-      onChange: function() {
-        clearTimeout(play.processDelay);
-        play.processDelay = setTimeout(play.process, 300);
-      }
-    };
-    
-    play.editor = CodeMirror.fromTextArea(editor, editorOptions);
-    setTimeout(play.process, 300);
-    
-    // Initialize CodeMirror output displays
-    var turtleOutputDisplay = document.getElementById('turtleOutputDisplay');
-    var turtleOutputOptions = {
-      mode: 'text/turtle',
-      readOnly: true
-    };
-    play.turtleOutputDisplay = 
-      CodeMirror.fromTextArea(turtleOutputDisplay, turtleOutputOptions);
-
-    /*
-    var ntriplesOutputDisplay = 
-      document.getElementById('ntriplesOutputDisplay');
-    var ntriplesOutputOptions = {
-      mode: 'text/n-triples',
-      readOnly: true
-    };
-    play.ntriplesOutputDisplay = 
-      CodeMirror.fromTextArea(ntriplesOutputDisplay, ntriplesOutputOptions);
-    */
-    
-    // bind to tab change events
-    $('a[data-toggle=tab]').bind('click', play.tabSelected);
-    
-    // bind the example buttons to the example callback
-    $('button[class=btn]').bind('click', play.loadExample);
-  };
-
-  /**
-   * Detects the example button that was clicked and loads the associated 
-   * example into the code editor.
-   *
-   * @param e the event object that was fired.
-   */
-  play.loadExample = function(e) {
-     var example = e.currentTarget.id.replace('btn-', '');
-     
-     if(example in play.examples) {
-       play.editor.setValue(play.examples[example]);
-     }
-  };
-
-  play.tabSelected = function(e) {
-    // e.target is the new active tab according to docs
-    // so save the reference in case it's needed later on
-    play.activeTab = e.target;
-    
-    // FIXME: This is a hack - force an update of the TURTLE display because 
-    // CodeMirror doesn't do it automatically on .show()
-    play.editor.setValue(play.editor.getValue());
-  };
-
-  /**
-   * Process the RDFa markup that has been input and display the output
-   * in the active tab.
-   */
-  play.process = function() {
-    var previewFrame = document.getElementById('preview');
-    var preview =  previewFrame.contentDocument || previewFrame.contentWindow.document;
-    
-    preview.open();
-    preview.write(play.editor.getValue());
-    preview.close();
-    
-    if(!preview.data)
-    {
-       GreenTurtle.attach(preview);
-    }
-    else
-    {
-       GreenTurtle.attach(preview, true);
-    }
-    
-    // iterate through all triples and insert them into the output display
-    var turtle = play.toTurtle(preview.data);
-    //var tLite = play.toTurtleLite(preview.data);
-    var d3Nodes = play.toD3TreeGraph(preview.data);
-    play.turtleOutputDisplay.setValue(turtle);
-    //play.ntriplesOutputDisplay.setValue(tLite);
-    play.viz.redraw(d3Nodes);
-  };
 
   /**
    * Attempts to retrieve the short name of an IRI based on the fragment
@@ -181,25 +69,23 @@
    */
   play.getIriShortName = function(iri, hashify) {
     var rval = iri;
-    
+
     // find the last occurence of # or / - short name is everything after it
-    if(iri.indexOf('#') >= 0) {
-      if(hashify) {
+    if (iri.indexOf('#') >= 0) {
+      if (hashify) {
         rval = '#' + iri.split('#').pop();
-      }
-      else {
+      } else {
         rval = iri.split('#').pop();
       }
-    }
-    else if(iri.indexOf('/') >= 0) {
+    } else if (iri.indexOf('/') >= 0) {
       rval = iri.split('/').pop();
     }
-    
+
     // don't allow the entire IRI to be optimized away
-    if(rval.length < 1) {
+    if (rval.length < 1) {
       rval = iri;
     }
-    
+
     return rval;
   };
 
@@ -227,10 +113,10 @@
         'name': '',
         'children': []
       };
-      
+
       // calculate the short name of the node
       // prepend the predicate name if there is one
-      if(p !== undefined) {
+      if (p !== undefined) {
         name = play.getIriShortName(p) + ': ';
       }
 
@@ -241,97 +127,89 @@
       }
       ancestors = ancestors.concat(s);
 
-      if(s.charAt(0) == '_') {
+      if (s.charAt(0) == '_') {
         name += 'Item ' + bnodeNames[s];
-      }
-      else if(p == RDF_TYPE) {
+      } else if (p == RDF_TYPE) {
         name += play.getIriShortName(s);
-      }
-      else {
+      } else {
         name += play.getIriShortName(s, true);
       }
       node.name = name;
-      
+
       // create nodes for all predicates and objects
-      for(p in predicates)
-      {
+      for (p in predicates) {
         // do not include which vocabulary was used in the visualization
-        if(p == "http://www.w3.org/ns/rdfa#usesVocabulary") {
+        if (p == "http://www.w3.org/ns/rdfa#usesVocabulary") {
           continue;
         }
-      
+
         var objects = triples.predicates[p].objects;
-        for(oi in objects) {
+        for (oi in objects) {
           var value = '';
           var o = objects[oi];
 
-          if(o.type == RDF_OBJECT && ancestors.indexOf(o.value) == -1) {
+          if (o.type == RDF_OBJECT && ancestors.indexOf(o.value) == -1) {
             // recurse to create a node for the object if it's an object
             // and is not referring to itself
             createNode(o.value, p, data, node, ancestors);
             embedded[o.value] = true;
-          }
-          else {
+          } else {
             // generate the leaf node
             var name = '';
-            if(o.type == RDF_XML_LITERAL) {
+            if (o.type == RDF_XML_LITERAL) {
               // if the property is an XMLLiteral, serialise it
               name = play.nodelistToXMLLiteral(o.value);
-            }
-            else if (o.type == RDF_OBJECT) {
+            } else if (o.type == RDF_OBJECT) {
               // shorten any IRIs (if the property is referring to the
               // object itself)
               name = play.getIriShortName(o.value, true);
-            }
-            else {
+            } else {
               name = o.value;
             }
 
             var child = {
-               'name': play.getIriShortName(p) + ': ' + name
+              'name': play.getIriShortName(p) + ': ' + name
             };
             node.children.push(child);
           }
-        }        
+        }
       }
 
       // remove the children property if there are no children
-      if(node.children.length === 0) {
+      if (node.children.length === 0) {
         node.children = undefined;
       }
       // collapse children of nodes that have already been embedded
-      if(embedded[s] !== undefined && node.children !== undefined) {
+      if (embedded[s] !== undefined && node.children !== undefined) {
         node._children = node.children;
         node.children = undefined;
       }
-      
+
       rval.children.push(node);
     };
-    
+
     // Pre-generate names for all bnodes in the graph
-    for(si in subjects) {
+    for (si in subjects) {
       var s = subjects[si];
-      
+
       // calculate the short name of the node
-      if(s.charAt(0) == '_' && !(s in bnodeNames)) {
+      if (s.charAt(0) == '_' && !(s in bnodeNames)) {
         bnodeNames[s] = bnodeCount;
         bnodeCount += 1;
       }
     }
-    
+
     // Generate the D3 tree graph
-    for(si in subjects) {
+    for (si in subjects) {
       var s = subjects[si];
       createNode(s, undefined, data, rval);
     }
-    
+
     // clean up any top-level children with no data
     var cleaned = [];
-    for(c in rval.children)
-    {
+    for (c in rval.children) {
       var child = rval.children[c];
-      if(child.children !== undefined)
-      {
+      if (child.children !== undefined) {
         cleaned.push(child);
       }
     }
@@ -339,7 +217,7 @@
 
     return rval;
   };
-  
+
   /**
    * Attempts to compress an IRI and updates a map of used prefixes if the
    * compression was successful.
@@ -347,27 +225,26 @@
    * @param iri the IRI to compress into a Compact URI Expression.
    * @param prefixes the map of prefixes that have already been compressed.
    */
-  play.iriToCurie = function(iri, prefixes)
-  {
-     var rval = iri;
-     var detectedPrefix = false;
-     
-     for(prefix in play.knownPrefixes) {
-        var expanded = play.knownPrefixes[prefix];
-        
-        // if the IRI starts with a known CURIE prefix, compact it
-        if(iri.indexOf(expanded) == 0) {
-           rval = prefix + ':' + iri.replace(expanded, '');
-           prefixes[prefix] = expanded;
-           break;
-        }
-     }
-     
-     if(rval.length == iri.length) {
-        rval = '<' + iri + '>';
-     }
-     
-     return rval;
+  play.iriToCurie = function(iri, prefixes) {
+    var rval = iri;
+    var detectedPrefix = false;
+
+    for (prefix in play.knownPrefixes) {
+      var expanded = play.knownPrefixes[prefix];
+
+      // if the IRI starts with a known CURIE prefix, compact it
+      if (iri.indexOf(expanded) == 0) {
+        rval = prefix + ':' + iri.replace(expanded, '');
+        prefixes[prefix] = expanded;
+        break;
+      }
+    }
+
+    if (rval.length == iri.length) {
+      rval = '<' + iri + '>';
+    }
+
+    return rval;
   };
 
   /**
@@ -377,7 +254,7 @@
    */
   play.nodelistToXMLLiteral = function(nodelist) {
     var str = '';
-    for(var i = 0; i < nodelist.length; i++) {
+    for (var i = 0; i < nodelist.length; i++) {
       var n = nodelist[i];
       str += n.outerHTML || n.nodeValue;
     }
@@ -392,23 +269,21 @@
   play.toTurtleLite = function(data) {
     var rval = '';
     var subjects = data.getSubjects();
-    for(si in subjects) {
+    for (si in subjects) {
       var s = subjects[si];
       var triples = data.getSubject(s);
       var predicates = triples.predicates;
-      
-      for(p in predicates)
-      {
+
+      for (p in predicates) {
         var objects = triples.predicates[p].objects;
-                
-        for(oi in objects) {
+
+        for (oi in objects) {
           var o = objects[oi];
 
           // print the subject
-          if(s.charAt(0) == '_') {
+          if (s.charAt(0) == '_') {
             rval += s + ' ';
-          }
-          else {
+          } else {
             rval += '<' + s + '> ';
           }
 
@@ -417,32 +292,28 @@
 
           //console.log(o);
           // print the object
-          if(o.type == RDF_PLAIN_LITERAL) {
-             rval += '"' + o.value.replace('"', '\\"') + '"';
-             if(o.language != null) {
-                rval += '@' + o.language;
-             }
-          }
-          else if(o.type == RDF_OBJECT) {
-            if(o.value.charAt(0) == '_') {
-              rval += o.value;
+          if (o.type == RDF_PLAIN_LITERAL) {
+            rval += '"' + o.value.replace('"', '\\"') + '"';
+            if (o.language != null) {
+              rval += '@' + o.language;
             }
-            else {
+          } else if (o.type == RDF_OBJECT) {
+            if (o.value.charAt(0) == '_') {
+              rval += o.value;
+            } else {
               rval += '<' + o.value + '>';
             }
+          } else {
+            rval += o.value;
           }
-          else
-          {
-             rval += o.value;
-          }
-          
+
           rval += ' .\n';
         }
-      }      
+      }
     }
-    
+
     return rval;
-  };  
+  };
 
   /**
    * Converts the RDFa data in the page to a TURTLE representation of the data.
@@ -454,31 +325,31 @@
     var prefixesUsed = {};
 
     var subjects = data.getSubjects();
-    for(si in subjects) {
+    for (si in subjects) {
       var s = subjects[si];
       var triples = data.getSubject(s);
       var predicates = triples.predicates;
 
       // print the subject
-      if(s.charAt(0) == '_') {
+      if (s.charAt(0) == '_') {
         rval += s + ' ';
-      }
-      else {
+      } else {
         rval += '<' + s + '>';
       }
       rval += '\n';
 
       pList = [];
-      for(p in predicates) { pList.push(p) }
+      for (p in predicates) {
+        pList.push(p)
+      }
       var lastP = pList.length - 1;
 
-      for(pi in pList)
-      {
+      for (pi in pList) {
         var p = pList[pi];
         var objects = triples.predicates[p].objects;
         var lastO = objects.length - 1;
 
-        for(oi in objects) {
+        for (oi in objects) {
           var o = objects[oi];
 
           // print the predicate, as a CURIE if possible
@@ -486,40 +357,34 @@
 
           //console.log(o);
           // print the object
-          if(o.type == RDF_PLAIN_LITERAL) {
-             var lit = o.value.replace('"', '\\"');
-             var sep = '"';
-             if (lit.indexOf('\n') > -1) {
-               sep = '"""';
-             }
-             rval += sep + lit + sep;
-             if(o.language != null) {
-                rval += '@' + o.language;
-             }
-          }
-          else if(o.type == RDF_OBJECT) {
-            if(o.value.charAt(0) == '_') {
-              rval += o.value;
+          if (o.type == RDF_PLAIN_LITERAL) {
+            var lit = o.value.replace('"', '\\"');
+            var sep = '"';
+            if (lit.indexOf('\n') > -1) {
+              sep = '"""';
             }
-            else {
+            rval += sep + lit + sep;
+            if (o.language != null) {
+              rval += '@' + o.language;
+            }
+          } else if (o.type == RDF_OBJECT) {
+            if (o.value.charAt(0) == '_') {
+              rval += o.value;
+            } else {
               rval += play.iriToCurie(o.value, prefixesUsed);
             }
-          }
-          else if(o.type == RDF_XML_LITERAL) {
+          } else if (o.type == RDF_XML_LITERAL) {
             rval += '"';
             rval += play.nodelistToXMLLiteral(o.value).replace('"', '\\"');
             rval += '"^^rdf:XMLLiteral';
-          }
-          else if(o.type != null) {
+          } else if (o.type != null) {
             rval += '"' + o.value.replace('"', '\\"') + '"' + '^^' +
               play.iriToCurie(o.type, prefixesUsed);
+          } else {
+            console.log("UNCAUGHT TYPE", o);
+            rval += o.value;
           }
-          else
-          {
-             console.log("UNCAUGHT TYPE", o);
-             rval += o.value;
-          }
-          
+
           // place the proper TURTLE statement terminator on the data
           if (pi == lastP && oi == lastO) {
             rval += ' .\n';
@@ -527,33 +392,18 @@
             rval += ';\n';
           }
         }
-      }      
+      }
     }
 
     // prepend the prefixes used to the TURTLE representation.
     var prefixHeader = '';
-    for(prefix in prefixesUsed)
-    {
-       prefixHeader += 
-          '@prefix ' + prefix +': <' + prefixesUsed[prefix] + '> .\n';
+    for (prefix in prefixesUsed) {
+      prefixHeader +=
+        '@prefix ' + prefix + ': <' + prefixesUsed[prefix] + '> .\n';
     }
     rval = prefixHeader + '\n' + rval;
-    
+
     return rval;
-  };  
-
-  /**
-   * Populate the UI with a named example.
-   *
-   * @param name the name of the example to pre-populate the input boxes.
-   */
-  play.populateWithExample = function(name) {
-
-    if(name in play.examples) {
-      // TODO: implement examples
-    }
   };
 
-  // initialize RDFa Play
-  play.init();
 })(jQuery);

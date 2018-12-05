@@ -1,27 +1,14 @@
-/*
-var onMessageHandler = function(message) {
-  // Ensure it is run only once, as we will try to message twice
-  chrome.runtime.onMessage.removeListener(onMessageHandler);
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    console.log(message);
+    console.log(sender);
+    console.log(sendResponse);
+});
 
-  var form = document.createElement("form");
-  form.setAttribute("method", "LINK");
-  form.setAttribute("action", message.url);
-  for ( var key in message.data) {
-    var hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type", "hidden");
-    hiddenField.setAttribute("name", key);
-    hiddenField.setAttribute("value", message.data[key]);
-    form.appendChild(hiddenField);
-  }
-  document.body.appendChild(form);
-  console.log(message);
-  form.submit();
-};
-
-chrome.runtime.onMessage.addListener(onMessageHandler);
-*/
-
+var codeMirrorHtmlMixed = null;
+var codeMirrorHtmlMixed = null;
 $(document).ready(function() {
+  var viewPortWidth = $(window).width();
+
   var person =
     '<div vocab="http://schema.org/" typeof="Person">\n'+
     '  <a property="image" href="http://manu.sporny.org/images/manu.png">\n' +
@@ -38,7 +25,7 @@ $(document).ready(function() {
     '  </div>\n' +
     '</div>';
 
-  //$('textarea#pageHtml').text(person);
+  $('textarea#pageHtml').text(person);
 
   var mixedMode = {
     name : "htmlmixed",
@@ -50,8 +37,51 @@ $(document).ready(function() {
       mode : "vbscript"
     } ]
   };
-  var editor = CodeMirror.fromTextArea(document.getElementById("pageHtml"), {
+  codeMirrorHtmlMixed = CodeMirror.fromTextArea(document.getElementById("pageHtml"), {
     mode : mixedMode,
+    tabMode : 'indent',
+    autoRefresh : true,
+    lineNumbers : true,
+    styleActiveLine : true,
+    matchBrackets : true,
+    readOnly : true,
     selectionPointer : true
   });
+
+  codeMirrorTurtle = CodeMirror.fromTextArea(document.getElementById("turtleOutput"), {
+    mode : 'text/turtle',
+    tabMode : 'indent',
+    autoRefresh : true,
+    lineNumbers : true,
+    styleActiveLine : true,
+    matchBrackets : true,
+    readOnly : true,
+    selectionPointer : true
+  });
+
+  $('select.theme').on('change', function(e){
+    var theme = $(this).val();
+    codeMirrorHtmlMixed.setOption("theme", theme);
+    codeMirrorTurtle.setOption("theme", theme);
+  });
+
+  /**
+   * Process the RDFa markup that has been input and display the output in the active tab.
+   */
+  var previewFrame = document.getElementById('preview');
+  var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+  preview.open();
+  preview.write(codeMirrorHtmlMixed.getValue());
+  preview.close();
+  if (!preview.data) {
+    GreenTurtle.attach(preview);
+  } else {
+    GreenTurtle.attach(preview, true);
+  }
+
+  // iterate through all triples and insert them into the output display
+  var turtle = play.toTurtle(preview.data);
+  var d3Nodes = play.toD3TreeGraph(preview.data);
+  codeMirrorTurtle.setValue(turtle);
+  play.viz.redraw(d3Nodes);
 });
