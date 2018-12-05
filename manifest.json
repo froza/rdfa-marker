@@ -10,7 +10,8 @@
     "declarativeContent",
     "tabs",
     "storage",
-    "debugger"
+    "debugger",
+    "contextMenus"
   ],
   "options_page" : "html/options.html",
   "background" : {
