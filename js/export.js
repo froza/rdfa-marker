@@ -1,13 +1,12 @@
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    console.log(message);
-    console.log(sender);
-    console.log(sendResponse);
-});
-
+var pageHTML = null;
 var codeMirrorHtmlMixed = null;
 var codeMirrorHtmlMixed = null;
 $(document).ready(function() {
   var viewPortWidth = $(window).width();
+  chrome.storage.local.get([ 'pageHTML' ], function(item) {
+    console.log(item.pageHTML);
+    pageHTML = item.pageHTML;
+  });
 
   var person =
     '<div vocab="http://schema.org/" typeof="Person">\n'+
@@ -59,7 +58,7 @@ $(document).ready(function() {
     selectionPointer : true
   });
 
-  $('select.theme').on('change', function(e){
+  $('select.theme').on('change', function(e) {
     var theme = $(this).val();
     codeMirrorHtmlMixed.setOption("theme", theme);
     codeMirrorTurtle.setOption("theme", theme);
@@ -84,4 +83,11 @@ $(document).ready(function() {
   var d3Nodes = play.toD3TreeGraph(preview.data);
   codeMirrorTurtle.setValue(turtle);
   play.viz.redraw(d3Nodes);
+
+  $('button.download_html_marked').on('click', function(e) {
+    download(codeMirrorHtmlMixed.getValue(), "html-marked.html", "text/html");
+  });
+  $('a.download_rdf').on('click', function(e) {
+    download(codeMirrorTurtle.getValue(), "html-marked.rdf", "application/octet-stream");
+  });
 });

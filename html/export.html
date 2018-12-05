@@ -112,11 +112,11 @@
 <body class="bg-light">
   <div class="container">
     <div class="row">
-      <div class="col">
+      <div class="col-6 text-center">
         <h3>HTML Semantic Generated:</h3>
       </div>
-      <div class="col">
-        <select class="theme" style="float: right; margin-top: 10px;">
+      <div class="col-3">
+        <select class="theme float-right mt-2">
           <option selected disabled>Select a theme</option>
           <option>all-hallow-eve</option>
           <option>amy</option>
@@ -223,6 +223,9 @@
           <option>zenburnesque</option>
         </select>
       </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-primary btn-sm mt-1 float-right download_html_marked">Download HTML Marked</button>
+      </div>
     </div>
     <div class="row">
       <div class="col">
@@ -231,12 +234,12 @@
         <iframe id="preview" style="width: 0; height: 0; border: 0; border: none"></iframe>
       </div>
     </div>
-    <br />
     <div class="row">
       <div class="col">
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item"><a class="nav-link active" id="rdf-graph-tab" data-toggle="tab" href="#rdf-graph" role="tab" aria-controls="rdf-graph" aria-selected="true">RDF Graph</a></li>
           <li class="nav-item"><a class="nav-link" id="rdf-raw-tab" data-toggle="tab" href="#rdf-raw" role="tab" aria-controls="rdf-raw" aria-selected="false">RDF RAW</a></li>
+          <li class="nav-item"><a class="nav-link download_rdf" href="#rdf-raw-download" style="color: green;">Download RDF</a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane fade show active" id="rdf-graph" role="tabpanel" aria-labelledby="rdf-graph-tab">
@@ -269,6 +272,7 @@
   <script type="text/javascript" src="/js/rdfa.min.js"></script>
   <script type="text/javascript" src="/js/play.js"></script>
   <script type="text/javascript" src="/js/visualization.min.js"></script>
+  <script type="text/javascript" src="/js/download.min.js"></script>
   <script type="text/javascript" src="/js/export.js"></script>
 </body>
 </html>

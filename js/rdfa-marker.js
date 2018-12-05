@@ -74,13 +74,15 @@ createSubMenus();
 chrome.contextMenus.onClicked.addListener(function(clickData) {
   if (clickData.menuItemId == "Export") {
     pageHTML = document.documentElement.outerHTML;
+    console.log(pageHTML);
+    chrome.storage.local.remove([ 'pageHTML' ], function() {
+    });
+    chrome.storage.local.set({
+      'pageHTML' : pageHTML
+    }, function() {
+    });
     chrome.tabs.create({
       url : '/html/export.html'
-    }, function(tab){
-      // send message
-      var sendData =  {greeting: "hello"};
-      console.log(sendData);
-      chrome.tabs.sendMessage(tab.id, sendData, function(){});
     });
   }
   if (clickData.menuItemId == "root" && clickData.selectionText) {
@@ -113,6 +115,6 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
 
 chrome.storage.onChanged.addListener(function(changes, storageName) {
   chrome.browserAction.setBadgeText({
-    "text" : changes.total.newValue.toString()
+    "text" : changes.total !== undefined && changes.total.newValue !== undefined ? changes.total.newValue.toString() : ''
   });
 });

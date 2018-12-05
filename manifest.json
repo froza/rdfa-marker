@@ -8,11 +8,15 @@
   "permissions" : [
     "activeTab",
     "declarativeContent",
+    "cookies",
     "tabs",
     "storage",
     "debugger",
     "notifications",
-    "contextMenus"
+    "contextMenus",
+    "<all_urls>",
+    "http://*/*",
+    "https://*/*"
   ],
   "options_page" : "/html/options.html",
   "background" : {
