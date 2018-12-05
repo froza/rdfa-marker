@@ -7,21 +7,21 @@ var menuItem = {
 var menuSubject = {
     "id": "itemSubject",
     "parentId": "root",
-    "title": "Marcar como Sujeito",
+    "title": "Marcar seleção como Sujeito",
     "contexts": ["selection"]
 };
 
 var menuPredicate = {
     "id": "itemPredicate",
     "parentId": "root",
-    "title": "Marcar como Predicado",
+    "title": "Marcar seleção como Predicado",
     "contexts": ["selection"]
 };
 
 var menuObject = {
     "id": "itemObject",
     "parentId": "root",
-    "title": "Marcar como Objeto",
+    "title": "Marcar seleção como Objeto",
     "contexts": ["selection"]
 };
 
@@ -36,6 +36,37 @@ chrome.contextMenus.create(menuSubject);
 chrome.contextMenus.create(menuPredicate);
 chrome.contextMenus.create(menuObject);
 
+
+function createSubMenus(){
+    createSubMenuSubject("http://dbpedia.org/data3/Person.json", "itemSubject");
+    createSubMenuPredicate("http://dbpedia.org/data3/Person.json", "itemPredicate");    
+}
+
+function createSubMenuSubject(url, parentId){
+    var subMenu = createSubMenu(url,parentId,url );
+    chrome.contextMenus.create(subMenu);
+}
+
+function createSubMenuPredicate(getUrl,parentId){
+    $.get( getUrl, function( response ) {        
+        $.each(response, function(key, item){
+            var predicate = key;                        
+            var subMenu = createSubMenu(key,parentId,key );
+            chrome.contextMenus.create(subMenu);
+          });
+    });
+}
+
+function createSubMenu(id, parentId, title){
+    return {
+        "id": id,
+        "parentId": parentId,
+        "title": title,
+        "contexts": ["selection"]
+    };
+}
+
+createSubMenus();
 
 chrome.contextMenus.onClicked.addListener(function(clickData){   
     if (clickData.menuItemId == "root" && clickData.selectionText){    
