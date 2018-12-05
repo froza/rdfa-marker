@@ -1,3 +1,8 @@
+var menuExport = {
+    "id": "Export",
+    "title": "Export RDFa Marker"
+};
+
 var menuItem = {
     "id": "root",
     "title": "Adicionar marcação RDFa a seleção",
@@ -37,7 +42,11 @@ chrome.contextMenus.create(menuPredicate);
 chrome.contextMenus.create(menuObject);
 
 
-chrome.contextMenus.onClicked.addListener(function(clickData){   
+chrome.contextMenus.onClicked.addListener(function(clickData){
+	if (clickData.menuItemId == "Export"){
+      var newURL = "http://stackoverflow.com/";
+      chrome.tabs.create({ url: newURL });
+    }
     if (clickData.menuItemId == "root" && clickData.selectionText){    
         if (isInt(clickData.selectionText)){          
             chrome.storage.sync.get(['total','limit'], function(budget){

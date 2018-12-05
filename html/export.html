@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/codemirror.css" type="text/css" />
+<link rel="stylesheet" href="/css/play.css" type="text/css" />
+</head>
+<body>
+  <div class="container">
+    <h3>HTML page generated:</h3>
+    <div class="row">
+        <textarea id="pageHtml" class="form-control border border-dark w-100">
+<html style="color: green">
+  <!-- this is a comment -->
+  <head>
+    <title>Mixed HTML Example</title>
+    <style>
+h1 {
+  font-family: comic sans;
+  color: #f0f;
+}
+
+div {
+  background: yellow !important;
+}
+
+body {
+  max-width: 50em;
+  margin: 1em 2em 1em 5em;
+}
+</style>
+  </head>
+  <body>
+        <div vocab="http://schema.org/" typeof="Person">
+          <a property="image" href="http://manu.sporny.org/images/manu.png">
+            <span property="name">Manu Sporny</span>
+          </a>
+          ,
+          <span property="jobTitle">Founder/CEO</span>
+          <div>
+            Phone:
+            <span property="telephone">(540) 961-4469</span>
+          </div>
+          <div>
+            E-mail:
+            <a property="email" href="mailto:msporny@digitalbazaar.com">msporny@digitalbazaar.com</a>
+          </div>
+          <div>
+            Links:
+            <a property="url" href="http://manu.sporny.org/">Manus homepage</a>
+          </div>
+        </div>
+<script>
+      function jsFunc(arg1, arg2) {
+        if (arg1 && arg2) document.body.innerHTML = "achoo";
+      }
+    </script>
+  </body>
+</html>
+      </textarea>
+    </div>
+    <br />
+    <div class="row">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item"><a class="nav-link active" id="visualization-tab" data-toggle="tab" href="#visualization" role="tab" aria-controls="visualization" aria-selected="true">Visualization</a></li>
+        <li class="nav-item"><a class="nav-link" id="rdf-tab" data-toggle="tab" href="#visualization" role="tab" aria-controls="rdf" aria-selected="false">RDF</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="visualization" role="tabpanel" aria-labelledby="visualization-tab">
+          <div id="viz-tab">
+            <div id="graph"></div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="rdf" role="tabpanel" aria-labelledby="rdf-tab">
+          <div id="turtle">
+            <textarea id="turtleOutputDisplay"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/jquery-migrate.min.js"></script>
+  <script type="text/javascript" src="/js/underscore.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/codemirror.min.js"></script>
+  <!-- <script type="text/javascript" src="/js/codemirror-turtle.min.js"></script> -->
+  <script type="text/javascript" src="/js/javascript.min.js"></script>
+  <script type="text/javascript" src="/js/selection-pointer.min.js"></script>
+  <script type="text/javascript" src="/js/xml.min.js"></script>
+  <script type="text/javascript" src="/js/javascript.min.js"></script>
+  <script type="text/javascript" src="/js/css.min.js"></script>
+  <script type="text/javascript" src="/js/vbscript.min.js"></script>
+  <script type="text/javascript" src="/js/htmlmixed.min.js"></script>
+  <script type="text/javascript" src="/js/d3.min.js"></script>
+  <script type="text/javascript" src="/js/rdfa.min.js"></script>
+  <script type="text/javascript" src="/js/play.js"></script>
+  <script type="text/javascript" src="/js/play-examples.js"></script>
+  <script type="text/javascript" src="/js/visualization.min.js"></script>
+  <script type="text/javascript" src="/js/export.js"></script>
+</body>
+</html>
