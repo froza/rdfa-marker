@@ -42,5 +42,21 @@
     "32" : "/img/icon-32x32.png",
     "48" : "/img/icon-48x48.png",
     "128" : "/img/icon-128x128.png"
-  }
+  },
+  "content_scripts" : [
+    {
+      "css" : [
+        "/css/rdfa-marker.css"
+      ],
+      "js" : [
+        "/js/jquery.min.js",
+        "/js/jquery-migrate.min.js",
+        "/js/content.js"
+      ],
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
 }
