@@ -13,26 +13,27 @@
     "debugger",
     "contextMenus"
   ],
-  "options_page" : "html/options.html",
+  "options_page" : "/html/options.html",
   "background" : {
     "persistent" : false,
     "scripts" : [
       "background.js"
     ]
   },
-  "page_action" : {
+  "browser_action" : {
+    "default_title" : "RDFa Marker",
     "default_popup" : "html/popup.html",
     "default_icon" : {
-      "16" : "img/icon-16x16.png",
-      "32" : "img/icon-32x32.png",
-      "48" : "img/icon-48x48.png",
-      "128" : "img/icon-128x128.png"
+      "16" : "/img/icon-16x16.png",
+      "32" : "/img/icon-32x32.png",
+      "48" : "/img/icon-48x48.png",
+      "128" : "/img/icon-128x128.png"
     }
   },
   "icons" : {
-    "16" : "img/icon-16x16.png",
-    "32" : "img/icon-32x32.png",
-    "48" : "img/icon-48x48.png",
-    "128" : "img/icon-128x128.png"
+    "16" : "/img/icon-16x16.png",
+    "32" : "/img/icon-32x32.png",
+    "48" : "/img/icon-48x48.png",
+    "128" : "/img/icon-128x128.png"
   }
 }
