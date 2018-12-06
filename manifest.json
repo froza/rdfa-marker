@@ -21,12 +21,17 @@
   "options_page" : "/html/options.html",
   "web_accessible_resources" : [
     "/html/templates.html",
-    "/img/ui-icons_222222_256x240.png",
-    "/img/ui-bg_highlight-soft_75_cccccc_1x100.png",
-    "/img/ui-bg_glass_75_e6e6e6_1x400.png",
-    "/img/ui-icons_888888_256x240.png",
+    "/img/ui-bg_glass_55_fbf9ee_1x400.png",
+    "/img/ui-bg_glass_65_ffffff_1x400.png",
     "/img/ui-bg_glass_75_dadada_1x400.png",
-    "/img/ui-icons_454545_256x240.png"
+    "/img/ui-bg_glass_75_e6e6e6_1x400.png",
+    "/img/ui-bg_glass_95_fef1ec_1x400.png",
+    "/img/ui-bg_highlight-soft_75_cccccc_1x100.png",
+    "/img/ui-icons_222222_256x240.png",
+    "/img/ui-icons_2e83ff_256x240.png",
+    "/img/ui-icons_454545_256x240.png",
+    "/img/ui-icons_888888_256x240.png",
+    "/img/ui-icons_cd0a0a_256x240.png"
   ],
   "background" : {
     "persistent" : false,
@@ -51,15 +56,16 @@
   "content_scripts" : [
     {
       "css" : [
-        "/css/bootstrap.min.css",
         "/css/jquery-ui.min.css",
-        "/css/rdfa-marker.css"
+        "/css/select2.min.css",
+        "/css/rdfa-marker-content.css"
       ],
       "js" : [
         "/js/jquery.min.js",
         "/js/jquery-migrate.min.js",
         "/js/jquery-ui.min.js",
         "/js/underscore.min.js",
+        "/js/select2.full.min.js",
         "/js/rdfa-marker-content.js"
       ],
       "matches" : [

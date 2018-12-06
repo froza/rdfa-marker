@@ -1,0 +1,11 @@
+.rdfa-marker-subject {
+  color: purple;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.rdfa-marker-roperties {
+  color: green;
+  font-size: 14px;
+  font-weight: bold;
+}

@@ -1,34 +1,43 @@
-function isInt(value) {
-  return !isNaN(value) && parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
-}
+var personSchema = 'http://dbpedia.org/data3/Person.json'
+var propertiesItem = 'http://www.w3.org/2000/01/rdf-schema#domain';
+var subjectItem = 'http://www.w3.org/2000/01/rdf-schema#subClassOf';
 
-function createSubMenus() {
-  createSubMenuSubject("http://dbpedia.org/data3/Person.json", "itemSubject");
-  createSubMenuPredicate("http://dbpedia.org/data3/Person.json", "itemPredicate");
-}
+var subjectItemData = [];
+var propertiesItemData = [];
 
-function createSubMenuSubject(url, parentId) {
-  var subMenu = createSubMenu(url, parentId, url);
-  chrome.contextMenus.create(subMenu);
-}
-
-function createSubMenuPredicate(getUrl, parentId) {
-  $.get(getUrl, function(response) {
-    $.each(response, function(key, item) {
-      var predicate = key;
-      var subMenu = createSubMenu(key, parentId, key);
-      chrome.contextMenus.create(subMenu);
-    });
+function loadData() {
+  $.ajax({
+    url : personSchema,
+    type : 'GET',
+    dataType : 'json',
+    contentType : 'application/json',
+    cache : false,
+    async : false,
+    timeout : 0,
+    success : function(data, textStatus, jqXHR) {
+      $.each(data, function(key, item) {
+        for (var type in item) {
+          var value = item[type];
+          if (type === subjectItem) {
+            subjectItemData.push({
+              id : key,
+              text : key
+            });
+          } else if (type === propertiesItem) {
+            propertiesItemData.push({
+              id : key,
+              text : key
+            });
+          }
+        }
+      });
+    },
+    error : function(XMLHttpRequest, textStatus, errorThrown) {
+      console.log(XMLHttpRequest);
+    },
+    complete : function(jqXHR, textStatus) {
+    }
   });
-}
-
-function createSubMenu(id, parentId, title) {
-  return {
-    "id" : id,
-    "parentId" : parentId,
-    "title" : title,
-    "contexts" : [ "selection" ]
-  };
 }
 
 $(document).ready(function() {
@@ -36,34 +45,34 @@ $(document).ready(function() {
   });
 
   var menuSubject = {
-    "id" : "itemSubject",
-    "title" : "Marcar seleção como Sujeito",
-    "contexts" : [ "selection" ]
+    'id' : 'itemSubject',
+    'title' : 'Marcar seleção como Sujeito',
+    'contexts' : [ 'selection' ]
   };
 
   var menuPredicate = {
-    "id" : "itemPredicate",
-    "title" : "Marcar seleção como Predicado",
-    "contexts" : [ "selection" ]
+    'id' : 'itemPredicate',
+    'title' : 'Marcar seleção como Predicado',
+    'contexts' : [ 'selection' ]
   };
 
   var menuObject = {
-    "id" : "itemObject",
-    "title" : "Marcar seleção como Objeto",
-    "contexts" : [ "selection" ]
+    'id' : 'itemObject',
+    'title' : 'Marcar seleção como Objeto',
+    'contexts' : [ 'selection' ]
   };
 
   var menuSeparator = {
-    "id" : "menuSeparator",
-    "title" : "menuSeparator",
-    "type" : "separator",
-    "contexts" : [ "all" ]
+    'id' : 'menuSeparator',
+    'title' : 'menuSeparator',
+    'type' : 'separator',
+    'contexts' : [ 'all' ]
   };
 
   var menuExport = {
-    "id" : "Export",
-    "title" : "Export RDFa Marker",
-    "contexts" : [ "all" ]
+    'id' : 'Export',
+    'title' : 'Export RDFa Marker',
+    'contexts' : [ 'all' ]
   };
 
   chrome.contextMenus.create(menuSubject);
@@ -72,10 +81,10 @@ $(document).ready(function() {
   chrome.contextMenus.create(menuSeparator);
   chrome.contextMenus.create(menuExport);
 
-  // createSubMenus();
+  loadData();
 
   chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    if (info.menuItemId === "Export") {
+    if (info.menuItemId === 'Export') {
       chrome.tabs.create({
         url : '/html/export.html'
       });
@@ -86,8 +95,11 @@ $(document).ready(function() {
       }, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {
           action : info.menuItemId,
+          subjectItemData : subjectItemData,
+          propertiesItemData : propertiesItemData
         });
       });
     }
   });
+
 });
