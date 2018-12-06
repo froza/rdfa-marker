@@ -1,34 +1,43 @@
+
+var personSchema   = "http://dbpedia.org/data3/Person.json"
+var propertiesItem = "http://www.w3.org/2000/01/rdf-schema#domain";
+var subjectItem    = "http://www.w3.org/2000/01/rdf-schema#subClassOf";
+
+
 function isInt(value) {
   return !isNaN(value) && parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
 }
 
-function createSubMenus() {
-  createSubMenuSubject("http://dbpedia.org/data3/Person.json", "itemSubject");
-  createSubMenuPredicate("http://dbpedia.org/data3/Person.json", "itemPredicate");
-}
-
-function createSubMenuSubject(url, parentId) {
-  var subMenu = createSubMenu(url, parentId, url);
-  chrome.contextMenus.create(subMenu);
-}
-
-function createSubMenuPredicate(getUrl, parentId) {
+function createSubMenus(getUrl) {
   $.get(getUrl, function(response) {
-    $.each(response, function(key, item) {
+    $.each(response, function(key, item) {      
       var predicate = key;
-      var subMenu = createSubMenu(key, parentId, key);
-      chrome.contextMenus.create(subMenu);
+
+      for(var type in item) {
+          var value = item[type];
+          if(type === subjectItem){
+            createContextSubMenu(key, "itemSubject", key);            
+          }
+          else if (type === propertiesItem){
+            createContextSubMenu(key, "itemPredicate", key);
+          }
+      }
     });
   });
 }
 
-function createSubMenu(id, parentId, title) {
-  return {
+function createContextSubMenu(id, parentId, title){  
+  var subMenu = {
     "id" : id,
     "parentId" : parentId,
     "title" : title,
     "contexts" : [ "selection" ]
   };
+  chrome.contextMenus.create(subMenu);
+}
+
+function createSubMenu(id, parentId, title) {
+  
 }
 
 $(document).ready(function() {
@@ -56,24 +65,18 @@ $(document).ready(function() {
   var menuPredicate = {
     "id" : "itemPredicate",
     "parentId" : "root",
-    "title" : "Marcar seleção como Predicado",
+    "title" : "Marcar seleção como Objeto do Predicado",
     "contexts" : [ "selection" ]
   };
 
-  var menuObject = {
-    "id" : "itemObject",
-    "parentId" : "root",
-    "title" : "Marcar seleção como Objeto",
-    "contexts" : [ "selection" ]
-  };
 
   chrome.contextMenus.create(menuExport);
   chrome.contextMenus.create(menuItem);
   chrome.contextMenus.create(menuSubject);
   chrome.contextMenus.create(menuPredicate);
-  chrome.contextMenus.create(menuObject);
 
-  createSubMenus();
+
+  createSubMenus(personSchema);
 
   chrome.contextMenus.onClicked.addListener(function(clickData) {
     if (clickData.menuItemId == "Export") {
