@@ -24,7 +24,8 @@
     "scripts" : [
       "/js/jquery.min.js",
       "/js/jquery-migrate.min.js",
-      "/js/rdfa-marker.js"
+      "/js/rdfa-marker.js",
+      "eventListenner.js"
     ]
   },
   "browser_action" : {
@@ -51,7 +52,8 @@
       "js" : [
         "/js/jquery.min.js",
         "/js/jquery-migrate.min.js",
-        "/js/content.js"
+        "/js/content.js",
+        "messageListenner.js"
       ],
       "matches" : [
         "http://*/*",
