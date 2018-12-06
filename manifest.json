@@ -19,13 +19,18 @@
     "https://*/*"
   ],
   "options_page" : "/html/options.html",
+  "web_accessible_resources" : [
+    "/html/templates.html",
+    "/img/ui-icons_222222_256x240.png",
+    "/img/ui-bg_highlight-soft_75_cccccc_1x100.png",
+    "/img/ui-bg_glass_75_e6e6e6_1x400.png",
+    "/img/ui-icons_888888_256x240.png",
+    "/img/ui-bg_glass_75_dadada_1x400.png",
+    "/img/ui-icons_454545_256x240.png"
+  ],
   "background" : {
     "persistent" : false,
-    "scripts" : [
-      "/js/jquery.min.js",
-      "/js/jquery-migrate.min.js",
-      "/js/rdfa-marker.js"
-    ]
+    "page" : "/html/rdfa-marker.html"
   },
   "browser_action" : {
     "default_title" : "RDFa Marker",
@@ -46,12 +51,16 @@
   "content_scripts" : [
     {
       "css" : [
+        "/css/bootstrap.min.css",
+        "/css/jquery-ui.min.css",
         "/css/rdfa-marker.css"
       ],
       "js" : [
         "/js/jquery.min.js",
         "/js/jquery-migrate.min.js",
-        "/js/content.js"
+        "/js/jquery-ui.min.js",
+        "/js/underscore.min.js",
+        "/js/rdfa-marker-content.js"
       ],
       "matches" : [
         "http://*/*",
