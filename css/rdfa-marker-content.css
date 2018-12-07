@@ -1,11 +1,23 @@
+.ui-dialog-titlebar-close {
+  visibility: hidden;
+}
+
 .rdfa-marker-subject {
-  color: purple;
-  font-size: 14px;
+  background-color: lawngreen;
   font-weight: bold;
 }
 
-.rdfa-marker-roperties {
-  color: green;
-  font-size: 14px;
+.rdfa-marker-object {
+  background-color: yellow;
+  font-weight: bold;
+}
+
+.rdfa-marker-world-property {
+  background-color: darkGray;
+  font-weight: bold;
+}
+
+.rdfa-marker-join {
+  background-color: fuchsia;
   font-weight: bold;
 }

@@ -3,7 +3,15 @@ var propertiesItem = 'http://www.w3.org/2000/01/rdf-schema#domain';
 var subjectItem = 'http://www.w3.org/2000/01/rdf-schema#subClassOf';
 
 var subjectItemData = [];
+subjectItemData.push({
+  id : '',
+  text : ''
+});
 var propertiesItemData = [];
+propertiesItemData.push({
+  id : '',
+  text : ''
+});
 
 function loadData() {
   $.ajax({
@@ -16,7 +24,7 @@ function loadData() {
     timeout : 0,
     success : function(data, textStatus, jqXHR) {
       $.each(data, function(key, item) {
-        for (var type in item) {
+        for ( var type in item) {
           var value = item[type];
           if (type === subjectItem) {
             subjectItemData.push({
@@ -50,12 +58,6 @@ $(document).ready(function() {
     'contexts' : [ 'selection' ]
   };
 
-  var menuPredicate = {
-    'id' : 'itemPredicate',
-    'title' : 'Marcar seleção como Predicado',
-    'contexts' : [ 'selection' ]
-  };
-
   var menuObject = {
     'id' : 'itemObject',
     'title' : 'Marcar seleção como Objeto',
@@ -76,7 +78,6 @@ $(document).ready(function() {
   };
 
   chrome.contextMenus.create(menuSubject);
-  chrome.contextMenus.create(menuPredicate);
   chrome.contextMenus.create(menuObject);
   chrome.contextMenus.create(menuSeparator);
   chrome.contextMenus.create(menuExport);
@@ -85,14 +86,46 @@ $(document).ready(function() {
 
   chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === 'Export') {
-      chrome.tabs.create({
-        url : '/html/export.html'
+      // send message to save export data
+      chrome.tabs.query({
+        active : true,
+        currentWindow : true
+      }, function(tabs) {
+        // send message to save page
+        chrome.tabs.sendMessage(tabs[0].id, {
+          action : info.menuItemId
+        }, function(response) {
+          // call export after send message save pageHTML
+          localStorage.rdfaMakerPageHTML = response;
+          chrome.tabs.create({
+            url : '/html/export.html'
+          });
+        });
       });
     } else {
       chrome.tabs.query({
         active : true,
         currentWindow : true
       }, function(tabs) {
+        subjectItemData.sort(function(a, b) {
+          if (a.text < b.text) {
+            return -1;
+          }
+          if (b.text < a.text) {
+            return 1;
+          }
+          return 0;
+        });
+        propertiesItemData.sort(function(a, b) {
+          if (a.text < b.text) {
+            return -1;
+          }
+          if (b.text < a.text) {
+            return 1;
+          }
+          return 0;
+        });
+        // send message action
         chrome.tabs.sendMessage(tabs[0].id, {
           action : info.menuItemId,
           subjectItemData : subjectItemData,

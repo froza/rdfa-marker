@@ -6,12 +6,9 @@
   "description" : "rdfa-marker is chrome extension for Unicamp BR pratical project",
   "author" : "Unicamp",
   "permissions" : [
-    "activeTab",
-    "declarativeContent",
-    "cookies",
     "tabs",
+    "activeTab",
     "storage",
-    "debugger",
     "notifications",
     "contextMenus",
     "<all_urls>",
@@ -66,6 +63,7 @@
         "/js/jquery-ui.min.js",
         "/js/underscore.min.js",
         "/js/select2.full.min.js",
+        "/js/jquery.selection.min.js",
         "/js/rdfa-marker-content.js"
       ],
       "matches" : [

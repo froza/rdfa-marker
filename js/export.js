@@ -1,30 +1,45 @@
-var pageHTML = null;
+function stripScripts(s) {
+  var div = document.createElement('div');
+  div.innerHTML = s;
+  var scripts = div.getElementsByTagName('script');
+  var i = scripts.length;
+  while (i--) {
+    scripts[i].parentNode.removeChild(scripts[i]);
+  }
+  return div.innerHTML;
+}
+
 var codeMirrorHtmlMixed = null;
 var codeMirrorHtmlMixed = null;
 $(document).ready(function() {
   var viewPortWidth = $(window).width();
-  chrome.storage.local.get([ 'pageHTML' ], function(item) {
-    console.log(item.pageHTML);
-    pageHTML = item.pageHTML;
-  });
 
-  var person =
-    '<div vocab="http://schema.org/" typeof="Person">\n'+
-    '  <a property="image" href="http://manu.sporny.org/images/manu.png">\n' +
-    '    <span property="name">Manu Sporny</span></a>, \n' +
-    '  <span property="jobTitle">Founder/CEO</span>\n' +
-    '  <div>\n' +
-    '    Phone: <span property="telephone">(540) 961-4469</span>\n' +
-    '  </div>\n' +
-    '  <div>\n' +
-    '    E-mail: <a property="email" href="mailto:msporny@digitalbazaar.com">msporny@digitalbazaar.com</a>\n' +
-    '  </div>\n' +
-    '  <div>\n' +
-    '    Links: <a property="url" href="http://manu.sporny.org/">Manu\'s homepage</a>\n' +
-    '  </div>\n' +
-    '</div>';
-
-  $('textarea#pageHtml').text(person);
+  var isTestExportPage = false;
+  if (isTestExportPage) {
+    var person = '' + //
+    '<div vocab="http://schema.org/" typeof="Person">\n' + //
+    '  <a property="image" href="http://manu.sporny.org/images/manu.png">\n' + //
+    '    <span property="name">Manu Sporny</span></a>, \n' + //
+    '  <span property="jobTitle">Founder/CEO</span>\n' + //
+    '  <div>\n' + //
+    '    Phone: <span property="telephone">(540) 961-4469</span>\n' + //
+    '  </div>\n' + //
+    '  <div>\n' + //
+    '    E-mail: <a property="email" href="mailto:msporny@digitalbazaar.com">msporny@digitalbazaar.com</a>\n' + //
+    '  </div>\n' + //
+    '  <div>\n' + //
+    '    Links: <a property="url" href="http://manu.sporny.org/">Manu\'s homepage</a>\n' + //
+    '  </div>\n' + //
+    '</div>'; //
+    $('textarea#pageHtml').text(person);
+  } else {
+    var pageHTML = localStorage.rdfaMakerPageHTML;
+    var head = pageHTML.match(/<head[^>]*>[\s\S]*<\/head>/gi);
+    var body = pageHTML.match(/<body[^>]*>[\s\S]*<\/body>/gi);
+    var bodyStriped = stripScripts(body);
+    // $('textarea#pageHtml').text(pageHTML); // all page
+    $('textarea#pageHtml').text(bodyStriped); // only body striped (without scripts)
+  }
 
   var mixedMode = {
     name : "htmlmixed",
