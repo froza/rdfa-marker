@@ -14,13 +14,17 @@ propertiesItemData.push({
 });
 
 function loadData() {
+  console.log(JSON.parse(localStorage.getItem('subjectItemData')));
+  console.log(JSON.parse(localStorage.getItem('propertiesItemData')));
+  if (JSON.parse(localStorage.getItem('subjectItemData')).length > 1 //
+      && JSON.parse(localStorage.getItem('propertiesItemData')) > 1) {
+    return;
+  }
   $.ajax({
     url : personSchema,
     type : 'GET',
     dataType : 'json',
     contentType : 'application/json',
-    cache : false,
-    async : false,
     timeout : 0,
     success : function(data, textStatus, jqXHR) {
       $.each(data, function(key, item) {
@@ -38,6 +42,8 @@ function loadData() {
             });
           }
         }
+        localStorage.setItem('subjectItemData', JSON.stringify(subjectItemData));
+        localStorage.setItem('propertiesItemData', JSON.stringify(propertiesItemData));
       });
     },
     error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -107,7 +113,8 @@ $(document).ready(function() {
         active : true,
         currentWindow : true
       }, function(tabs) {
-        subjectItemData.sort(function(a, b) {
+        var subjectItemDataArray = JSON.parse(localStorage.getItem('subjectItemData'));
+        subjectItemDataArray.sort(function(a, b) {
           if (a.text < b.text) {
             return -1;
           }
@@ -116,7 +123,8 @@ $(document).ready(function() {
           }
           return 0;
         });
-        propertiesItemData.sort(function(a, b) {
+        var propertiesItemDataArray = JSON.parse(localStorage.getItem('propertiesItemData'));
+        propertiesItemDataArray.sort(function(a, b) {
           if (a.text < b.text) {
             return -1;
           }
@@ -128,8 +136,8 @@ $(document).ready(function() {
         // send message action
         chrome.tabs.sendMessage(tabs[0].id, {
           action : info.menuItemId,
-          subjectItemData : subjectItemData,
-          propertiesItemData : propertiesItemData
+          subjectItemData : subjectItemDataArray,
+          propertiesItemData : propertiesItemDataArray
         });
       });
     }
